@@ -16,6 +16,9 @@ from scipy.stats import norm
 df_test = pd.read_csv('C:/Users/Lam/Desktop/Code/ML/HousingPrediction/housepricesdata/test.csv')
 df_train = pd.read_csv('C:/Users/Lam/Desktop/Code/ML/HousingPrediction/housepricesdata/train.csv')
 
+print(df_train.info())
+print(df_test.info())
+
 
 # preprocessing
 
@@ -31,7 +34,36 @@ df_numerics_train['MasVnrArea'].fillna(0, inplace=True)
 df_numerics_train['GarageYrBlt'].fillna(df_numerics_train['GarageYrBlt'].median(), inplace=True)
 
 
-# EDA on the Jupyter Notebook
+# data analysis
+
+# correlation heatmap of all features
+
+corrmat = df_numerics_train.corr()
+f, ax = plt.subplots(figsize=(20, 10))
+sns.heatmap(corrmat, vmax=.8, annot=True)
+plt.show()
+
+# correlation heatmap of features with a correlation > 0.5 with SalePrice
+
+highest_corr = corrmat.index[abs(corrmat["SalePrice"])>0.5]
+highest_corrmat = df_numerics_train[highest_corr].corr()
+plt.figure(figsize=(10,8))
+sns.heatmap(highest_corrmat, vmax=.8, annot=True)
+plt.show()
+
+# pair plot of features with a correlation > 0.5 with SalePrice
+features = ['OverallQual', 'YearBuilt', 'YearRemodAdd', 'TotalBsmtSF', '1stFlrSF', 'GrLivArea', 
+            'FullBath', 'TotRmsAbvGrd', 'GarageCars', 'GarageArea']
+sns.pairplot(df_numerics_train[features], height = 2.5)
+plt.show()
+
+# distribution and probability plot of SalePrice
+
+sns.distplot(df_numerics_train['SalePrice'], fit=norm)
+
+fig = plt.figure()
+res = stats.probplot(df_numerics_train['SalePrice'], plot=plt)
+plt.show()
 
 
 # modelling
@@ -45,6 +77,17 @@ model = LinearRegression()
 model.fit(X_train, y_train)
 
 price_predictions = model.predict(X_test)
+
+# scatter plot of actual price vs predicted price
+plt.scatter(price_predictions, y_test, alpha = 0.5)
+plt.xlabel('Predicted Price')
+plt.ylabel('Actual Price')
+plt.title('Linear Regression Model')
+
+# probability plot of model residuals
+fig = plt.figure()
+stats.probplot(y_test - price_predictions, dist="norm", plot=plt)
+plt.show()
 
 # regression metrics
 mse = mean_squared_error(y_test, price_predictions)
