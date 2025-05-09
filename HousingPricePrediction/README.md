@@ -23,11 +23,11 @@ Data provided via https://www.kaggle.com/competitions/house-prices-advanced-regr
   
 ## 🛠️ Package Versions:
 
-Python                    3.10.6
-notebook                  7.4.2
-matplotlib                3.10.3
-numpy                     2.2.5
-pandas                    2.2.3
-scikit-learn              1.6.1
-scipy                     1.15.3
-seaborn                   0.13.2
+- Python                    3.10.6
+- notebook                  7.4.2
+- matplotlib                3.10.3
+- numpy                     2.2.5
+- pandas                    2.2.3
+- scikit-learn              1.6.1
+- scipy                     1.15.3
+- seaborn                   0.13.2
