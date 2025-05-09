@@ -16,8 +16,7 @@ Data provided via https://www.kaggle.com/competitions/house-prices-advanced-regr
 
 4. **Modeling**
    - Trained Linear Regression
-   - Evaluated with RMSE and R²
-   - Compared performance across approaches
+   - Evaluated with MSE, RMSE, and R²
 
 ---
   
