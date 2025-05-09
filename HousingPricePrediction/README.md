@@ -4,7 +4,18 @@ Data provided via https://www.kaggle.com/competitions/house-prices-advanced-regr
 
 ---
 
-## 🔍 Steps Taken
+## 🔍 Findings
+
+Looking at the correlation matrix, we see that the Overall Quality of the home has the greatest impact on its price. Additionally, there are numerous variables that factor into the Overall Quality of the home, mainly the year it was build / remodelled, total basement area, total above ground area, and garage area / size. As for the Linear Regression model I created, the metrics calculated in the end were:
+
+- RMSE: 36836.91
+- R2 Score: 0.8231
+
+This means that the average prediction error by the model is $36836.91 and that 82.31% of the variation in the home's price can be explained by the model.
+
+---
+
+## 🧮 Steps Taken
 
 1. **Data Preprocessing**
    - Handled missing values and filled them using the median or 0
