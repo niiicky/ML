@@ -2,15 +2,26 @@ This is a Python project that predicts the prices of homes in Ames, Iowa using a
 
 Data provided via https://www.kaggle.com/competitions/house-prices-advanced-regression-techniques/overview
 
-Data was cleaned and prepared using Pandas and NumPy
+---
 
-Correlation matrices, distribution plots, probability plots, and pair plots were created using Matplotlib, Seaborn, SciPy
+## 🔍 Steps Taken
 
-Linear regression model and regression metrics using Scikit-learn
+1. **Data Preprocessing**
+   - Handled missing values and filled them using the median or 0
+   - Removed outliers
 
+2. **Exploratory Data Analysis**
+   - Correlation heatmaps and pairplots
+   - Distribution and Q-Q plots
 
+4. **Modeling**
+   - Trained Linear Regression
+   - Evaluated with RMSE and R²
+   - Compared performance across approaches
 
-Package Versions:
+---
+  
+## 🛠️ Package Versions:
 
 Python                    3.10.6
 notebook                  7.4.2
