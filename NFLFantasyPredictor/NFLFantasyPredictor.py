@@ -27,7 +27,7 @@ cols = ['player_id', 'player_name', 'position', 'season', 'season_type',
         'receptions', 'targets', 'receiving_yards',
         'receiving_tds', 'receiving_fumbles', 'fantasy_points']
 
-years = [2020, 2021, 2022, 2023, 2024]
+years = [2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024]
 
 s = nfl.import_seasonal_rosters(years)
 s = s[['player_id', 'season', 'age']]
@@ -37,7 +37,7 @@ df = pd.DataFrame(nfl.import_weekly_data(years, cols))
 
 df = df[(df['season_type'] == 'REG') & (df['position'] == 'WR')]
 
-print(df[(df['player_name'] == 'J.Jefferson') & (df['season'] == 2023)])
+# print(df[(df['player_name'] == 'J.Jefferson') & (df['season'] == 2023)])
 
 df_totals = df.groupby(['player_id', 'player_name', 'season']).agg({'receptions': 'sum', 'targets': 'sum', 
                                                        'receiving_yards': 'sum', 'receiving_tds': 'sum', 
@@ -45,27 +45,33 @@ df_totals = df.groupby(['player_id', 'player_name', 'season']).agg({'receptions'
 
 df_merged = df_totals.merge(s, on=['player_id', 'season'])
 
+# variables in order to predict player's next season stats
+df_merged['nextSeason_receptions'] = df_merged.groupby(['player_id'])['receptions'].shift(-1)
+df_merged['nextSeason_targets'] = df_merged.groupby(['player_id'])['targets'].shift(-1)
 df_merged['nextSeason_receiving_yards'] = df_merged.groupby(['player_id'])['receiving_yards'].shift(-1)
+df_merged['nextSeason_receiving_tds'] = df_merged.groupby(['player_id'])['receiving_tds'].shift(-1)
+df_merged['nextSeason_receiving_fumbles'] = df_merged.groupby(['player_id'])['receiving_fumbles'].shift(-1)
 
+df_merged.dropna(axis = 0, inplace=True)
 
 print(df_merged.head())
 print(df_merged.info())
-print(df_merged[df_merged['player_name'] == 'J.Jefferson'])
+# print(df_merged[df_merged['player_name'] == 'J.Jefferson'])
 
 
 # EDA
 
 # Correlation matrix between all the numeric variables
-# corrmat = df_numerics.corr()
-# f, ax = plt.subplots(figsize=(20, 10))
+# corrmat = df_merged.corr()
+# f, ax = plt.subplots(figsize=(15, 10))
 # sns.heatmap(corrmat, vmax=.8, annot=True)
 # plt.show()
 
 # distribution and probability plots
-# sns.distplot(df_numerics['fantasy_points'], fit=norm)
+# sns.distplot(df_merged['fantasy_points'], fit=norm)
 
 # fig = plt.figure()
-# res = stats.probplot(df_numerics['fantasy_points'], plot=plt)
+# res = stats.probplot(df_merged['fantasy_points'], plot=plt)
 # plt.show()
 
 
